@@ -26,6 +26,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -44,7 +46,7 @@ public class Inventory extends Application {
     private final AnchorPane root = new AnchorPane();
     private final BorderPane subRoot = new BorderPane();
     private final SplitPane splitHoriz = new SplitPane();
-    private final VBox pLeft = new VBox();
+    private TreeView<String> pLeft;
     private final VBox pRight = new VBox();
     private final SplitPane splitVert = new SplitPane();
 //    private AnchorPane aInfo = new AnchorPane();
@@ -61,14 +63,23 @@ public class Inventory extends Application {
     public void start(Stage primaryStage) {
         setupMenuBar();
         
+        // Set up the TreeView on the left
+        TreeItem<String> treeItemRoot = new TreeItem<>("Root Node");
+        treeItemRoot.setExpanded(true);
+        treeItemRoot.getChildren().addAll(
+            new TreeItem<>("Item 1"),
+            new TreeItem<>("Item 2"),
+            new TreeItem<>("Item 3")
+        );
+        pLeft = new TreeView<>(treeItemRoot);
+        
+        // Placeholder for right content pane.
+        pRight.getChildren().addAll(new Text("Table view"));
+        
         // Set up left-right SplitPane
         splitHoriz.setOrientation(Orientation.HORIZONTAL);
         splitHoriz.getItems().addAll(pLeft, pRight);
         //splitHoriz.setPrefSize(640, 320);
-        
-        // Add content to left and right
-        pLeft.getChildren().addAll(new Text("Left"));
-        pRight.getChildren().addAll(new Text("Right"));
         
         // Add content to bottom
         pInfo.getChildren().addAll(textInfo);
