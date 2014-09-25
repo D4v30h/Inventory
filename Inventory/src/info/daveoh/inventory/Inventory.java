@@ -26,6 +26,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
@@ -47,7 +49,7 @@ public class Inventory extends Application {
     private final BorderPane subRoot = new BorderPane();
     private final SplitPane splitHoriz = new SplitPane();
     private TreeView<String> pLeft;
-    private final VBox pRight = new VBox();
+    private final TableView pRight = new TableView();
     private final SplitPane splitVert = new SplitPane();
 //    private AnchorPane aInfo = new AnchorPane();
     private final HBox pInfo = new HBox();
@@ -63,7 +65,7 @@ public class Inventory extends Application {
     public void start(Stage primaryStage) {
         setupMenuBar();
         
-        // Set up the TreeView on the left
+        // Set up the TreeView on the left.
         TreeItem<String> treeItemRoot = new TreeItem<>("Root Node");
         treeItemRoot.setExpanded(true);
         treeItemRoot.getChildren().addAll(
@@ -73,8 +75,12 @@ public class Inventory extends Application {
         );
         pLeft = new TreeView<>(treeItemRoot);
         
-        // Placeholder for right content pane.
-        pRight.getChildren().addAll(new Text("Table view"));
+        // Set up the TableView on the right.
+        pRight.setEditable(true);
+        TableColumn nameCol = new TableColumn("Name");
+        TableColumn locationCol = new TableColumn("Location");
+        TableColumn idCol = new TableColumn("ID#");
+        pRight.getColumns().addAll(nameCol, locationCol, idCol);
         
         // Set up left-right SplitPane
         splitHoriz.setOrientation(Orientation.HORIZONTAL);
